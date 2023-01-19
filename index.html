@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Soo Oh</title>
+</head>
+<body>
+    <div class="app">
+        <video src="video/index.mp4" autoPlay muted loop playsInline></video>
+        <div class="mu_box">
+            <button type="button" id="musicBtn">
+                <audio id="play" src="music/music.mp3" autoplay loop></audio>
+                <audio id="ws" src="music/ws.mp3" autoplay loop></audio>
+                <audio id="wilo" src="music/wilo.mp3" autoplay loop></audio>
+                <audio id="love" src="music/love.mp3" autoplay loop></audio>                
+                play_arrow</button>
+            <button type="button" id="userBtn"></button>
+        </div>
+        <div class="prev">
+            <button type="button" id="prevBtn"></button>
+        </div>
+        <div class="user_box">
+            <div class="user_data">
+                <div class="user"></div>
+                <span class="user_name">홍길동</span>
+                <button type="button" class="toggle t_end">
+                    <span class="bar1"></span>
+                    <span class="bar2"></span>
+                    <span class="sr_only">Toggle</span>
+                </button>
+            </div>
+            <div class="down">
+                <a href="#" class="locker">보관함</a>
+            </div>
+            <div class="out">
+                <a href="#" class="log_out">로그아웃</a>
+            </div>
+        </div>
+        <div class="user_content">
+            <div class="locker_box">
+                <h2>보관함</h2>
+                <button type="button" class="toggle r_end">
+                    <span class="bar1"></span>
+                    <span class="bar2"></span>
+                    <span class="sr_only">Toggle</span>
+                </button>
+            </div>
+            <div class="img_loker"></div>
+        </div>
+        <div class="content">
+            <h1>Soo Oh</h1>
+            <p>( 수고했어 오늘도 )</p>
+            <div class="signup_box">
+                <form action="#" method="post">
+                    <div class="id_box">
+                        <input type="text" id="id" name="id" title="아이디 or 이메일" placeholder="ID" value=""></input>
+                    </div>
+                    <div class="pw_box">
+                        <input type="password" id="pw" name="pw" title="비밀번호" placeholder="PW" value=""></input>
+                    </div>
+                    <div class="name_box">
+                        <input type="text" id="name" name="name" title="이름" placeholder="NAME" value=""></input>
+                    </div>
+                    <div class="signup_btn">
+                        <button class="signup" type="button" id="signup" title="회원가입">회원가입</button>
+                    </div>
+                </form>
+            </div>
+            <div class="login_box">
+                <form action="#" method="post">
+                    <div class="id_box">
+                        <input type="text" id="id2" name="id" title="아이디 or 이메일" placeholder="ID" value=""></input>
+                    </div>
+                    <div class="pw_box">
+                        <input type="password" id="pw2" name="pw" title="비밀번호" placeholder="PW" value=""></input>
+                    </div>
+                    <div class="login_btn">
+                        <button class="login" type="button" id="login" title="로그인">Login</button>
+                    </div>
+                </form>
+                <div class="ss">
+                    <a href="#" class="s_user">회원가입</a>
+                    <a href="#" class="b_user">비회원 로그인</a>
+                </div>
+            </div>
+            <div class="box">
+                <ul>
+                    <li><a href="#" class="ws_btn">명언</a></li>
+                    <li><a href="#" class="wilo_btn">위로</a></li>
+                    <li><a href="#" class="love_btn">사랑</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ws content2">
+            <div class="ws_box content2_box">
+                <div class="ws_img">
+                    <a href="#" class="ws_change content2_change"><img src="" alt="wsImg"></a>
+                </div>
+                <div class="txt_box">
+                    <p class="ws_txt"></p>
+                    <p class="ws_author"></p>
+                </div>
+            </div>
+        </div>
+        <div class="wilo content2">
+            <div class="wilo_box content2_box" >
+                <div class="wilo_img">
+                    <a href="#" class="wilo_change content2_change"><img src="" alt="wiloImg"></a>
+                </div>
+                <div class="txt_box">
+                    <p class="wilo_txt"></p>
+                    <p class="wilo_author"></p>
+                </div>
+            </div>
+        </div>
+        <div class="love content2">
+            <div class="love_box content2_box">
+                <div class="love_img">
+                    <a href="#" class="love_change content2_change"><img src="" alt="loveImg"></a>
+                </div>
+                <div class="txt_box">
+                    <p class="love_txt"></p>
+                    <p class="love_author"></p>    
+                </div>
+            </div>
+        </div>
+        <div class="save">
+            <button type="button" id="save"></button>
+        </div>
+    </div>
+    <script src="js/text_list.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
