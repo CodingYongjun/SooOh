@@ -7,6 +7,8 @@ const loginBox=document.querySelector('.login_box');
 const signUp=document.querySelector('.s_user');
 const signupBox=document.querySelector('.signup_box');
 const signupBtn=document.getElementById('signup');
+const idV=document.getElementById('id2');
+const pwV=document.getElementById('pw2');
 
 const loginSource=()=>{
     loginBox.style.display='none';
@@ -33,47 +35,95 @@ const bloginSource=()=>{
     toggle.style.display='none';
 }
 
-login.addEventListener('click',()=>{
-    const idBox=document.getElementById('id2');
-    const pwBox=document.getElementById('pw2');
+const getSaveInfo = () =>{
+	const userInfoJSON = localStorage.getItem('userInfo');
+	try{
+		return userInfoJSON? JSON.parse(userInfoJSON):[];
+	}catch{
+		return [];
+	}
+}
 
-    if(idBox.value=='aaa' && pwBox.value=='0000'){
-        loginSource();
-    }
-    if(idBox.value!='aaa' && pwBox.value=='0000'){
-        alert('아이디를 다시 입력해주세요');
-    }else if(pwBox.value!='0000' && idBox.value=='aaa'){
-        alert('비밀번호를 다시 입력해주세요')
-    }
-    if(idBox.value!='aaa' && pwBox.value!='0000'){
-        if(idBox.value=='' && pwBox.value==''){
-            alert('아이디와 비밀번호를 입력해주세요')
+let userInfo = getSaveInfo();
+localStorage.setItem("userInfo",JSON.stringify(userInfo));
+let loginState=false;
+let userIndex;
+let userName=document.querySelector('.user_name');
+
+login.addEventListener('click',(e)=>{
+    e.preventDefault();
+	let memberData=getSaveInfo();
+	let idValue=idV.value;
+	let pwValue=pwV.value;
+	for(let i in memberData){
+		if(memberData[i].id==idValue){
+			if(memberData[i].pw==pwValue){
+				loginState=true;
+				userIndex=i;
+			}else{
+                alert('비밀번호를 확인해 주세요');
+            }
+		}
+        if(memberData[i].id!=idValue){
+            if(memberData[i].pw==pwValue){
+                alert('아이디를 확인해 주세요');
+            }
+        }
+	}
+    if(idValue==""){
+        if(pwValue==""){
+            alert('아이디와 비밀번호를 입력해 주세요');
         }else{
-            alert('존재하지 않는 회원 입니다.')
+            alert('아이디를 입력해 주세요');
+        } 
+    }
+    if(pwValue==""){
+        if(idValue!=""){
+            alert('비밀번호를 입력해 주세요');
         }
     }
+	if(loginState){
+        loginSource();
+		userName.innerText=memberData[userIndex].user
+	}else if(idValue!="" && pwValue!=""){
+        alert('존재하지 않는 회원 입니다.')
+    }
 });
-
 signUp.addEventListener('click',()=>{
     loginBox.style.display='none';
     signupBox.style.display='block';
 });
-
 signupBtn.addEventListener('click',()=>{
     loginBox.style.display='block';
     signupBox.style.display='none';
+    let idD=document.getElementById('id')
+    let pwD=document.getElementById('pw')
+    let userN=document.getElementById('name')
+    let idData=idD.value;
+	let pwData=pwD.value;
+	let userName=userN.value;
+    userInfo.push({
+		id:idData,
+		pw:pwData,
+		user:userName
+	})
+	localStorage.setItem('userInfo', JSON.stringify(userInfo) );
+    idD.value="";
+    pwD.value="";
+    userN.value="";
 });
-
 Blogin.addEventListener('click',()=>{
     bloginSource();
 });
-
 logOut.addEventListener('click',()=>{
     logoutSource();
     wsMusic.pause();
     wiloMusic.pause();
     loveMusic.pause();
     music.load();
+    loginState=false;
+    idV.value="";
+    pwV.value="";
 });
 //------------------------------- user box ---------------------------
 const toggle=document.getElementById('userBtn');
@@ -85,7 +135,6 @@ const LockerBox=document.querySelector('.user_content');
 const prev=document.querySelector('.prev');
 const Save=document.querySelector('.save');
 const SaveBox=document.querySelector('.img_loker');
-
 let tt;
 let ad=[];
 
@@ -109,7 +158,6 @@ const prevSource=()=>{
     loveBox.style.display='none';
     Save.style.display='none';
 }
-
 prev.addEventListener('click',()=>{
     prevSource();
     music.load();
@@ -118,7 +166,6 @@ prev.addEventListener('click',()=>{
     loveMusic.pause();
     prevIf();
 });
-
 toggle.addEventListener('click',()=>{
     User.style.right='0px';
 });
@@ -128,28 +175,19 @@ toggleEnd.addEventListener('click',()=>{
 lockerEnd.addEventListener('click',()=>{
     LockerBox.style.bottom='-100vh';
 });
-
 Locker.addEventListener('click',()=>{
     LockerBox.style.bottom='0px';
-
-    console.log(ad);
-    SaveBox.replaceChildren(); //자식 노드를 파라미터로 입력받은 파라미터의 노드로 교체해주는 함수입니다. 그런데, 위 예제와 같이 파라미터로 아무것도 전달되지 않으면, 모든 자식 노드가 삭제됩니다.
-    // while(SaveBox.firstChild)  {
-    //     SaveBox.removeChild(SaveBox.firstChild);
-    // }
+    SaveBox.replaceChildren();
     for(let i=0; i<ad.length; i++){
         let newSave=document.createElement('div');
         let newTxt=document.createElement('p');
         let newAuthor=document.createElement('p');
         let newImg=document.createElement('img');
         let newtxtBox=document.createElement('div');
-        
         newTxt.innerHTML=ad[i].text;
         newImg.src=`img/${ad[i].img}.jpeg`
         newAuthor.innerHTML=ad[i].author;
-
         newImg.style.filter='brightness(40%)';
-
         newSave.appendChild(newImg);
         newSave.appendChild(newtxtBox);
         newtxtBox.appendChild(newTxt);
@@ -157,13 +195,10 @@ Locker.addEventListener('click',()=>{
         SaveBox.appendChild(newSave);
 
         newSave.addEventListener('click',()=>{
-            console.log(newSave);
             newSave.classList.toggle('up');
         });
     }
-    console.log(tt);
 });
-
 Save.addEventListener('click',()=>{
     ad.push(tt);
 });
@@ -173,6 +208,7 @@ const loveMusic=document.getElementById('love');
 const wsMusic=document.getElementById('ws');
 const wiloMusic=document.getElementById('wilo');
 const playBtn=document.getElementById('musicBtn');
+
 const musicIf=()=>{
     if(loveBox.style.display=='block'){
         loveMusic.play();
@@ -187,7 +223,6 @@ const musicIf=()=>{
 const musicStart=()=>{
     playBtn.innerHTML='pause';
     musicIf();
-    //music.play();
     playBtn.style.backgroundImage= "url(img/music.png)";
 }
 const musicStop=()=>{
@@ -213,52 +248,29 @@ const wsNext=document.querySelector('.ws_change');
 const wsImg=document.querySelector('.ws_change>img');
 const wsText=document.querySelector('.ws_txt');
 const wsAuthor=document.querySelector('.ws_author');
-let ws_index=Math.floor(Math.random()*ListM[0].length);
-// let ws_index=0;
-const nextWs=()=>{
-    ws_index=Math.floor(Math.random()*ListM[0].length);
 
-    let randomBox=[];
-    for(let i=0; i<=ListM[0].length; i++){
-        randomNum=ws_index;
-        if(randomBox.indexOf(randomNum)==-1){
-            randomBox.push(randomNum);
-        }
-    }
-    console.log(randomBox);
-
-    // let random=Math.floor(Math.random()*ListM[0].length);
-
-    // if(random!=ws_index){
-    //     ws_index=random;
-    // }else{
-    //     return nextWs();
-    // }
-    
-    // ws_index++;
-    // if(ws_index>=ListM[0].length){ ws_index=0;}
-    
-    wsImg.src=`img/${ListM[0][ws_index].img}.jpeg`;
-    wsText.innerText=ListM[0][ws_index].text;
-    wsAuthor.innerText=ListM[0][ws_index].author;
-    tt=ListM[0][ws_index];
-
-    // WsList(ws_index);
-    
-
+let indexList = [];
+for(let i in ListM[0]){
+	indexList.push(i);
 }
+let randomIndex=new Set();
+while(indexList.length>randomIndex.size){
+	randomIndex.add( Math.floor(Math.random()*indexList.length) );
+}
+randomIndex=[...randomIndex];
+let content_index=0;
 
-// const WsList=(num)=>{
-//     wsImg.src=`img/${ListM[0][num].img}.jpeg`;
-//     wsText.innerText=ListM[0][num].text;
-//     wsAuthor.innerText=ListM[0][num].author;
-//     tt=ListM[0][num];
-// }
-
+const nextWs=()=>{    
+    content_index++;
+	content_index=content_index%indexList.length;
+    wsImg.src=`img/${ListM[0][randomIndex[content_index]].img}.jpeg`;
+    wsText.innerText=ListM[0][randomIndex[content_index]].text;
+    wsAuthor.innerText=ListM[0][randomIndex[content_index]].author;
+    tt=ListM[0][randomIndex[content_index]];
+}
 wsNext.addEventListener('click',()=>{
     nextWs();
 });
-
 wsBtn.addEventListener('click',()=>{
     nextWs();
     listBox.style.display='none';
@@ -269,32 +281,24 @@ wsBtn.addEventListener('click',()=>{
     if(toggle.style.display=='block'){
         Save.style.display='block';
     }
-    console.log(tt);
 });
 // -----------------------------wilo box ----------------------------
-
 const wiloBox=document.querySelector('.wilo');
 const wiloBtn=document.querySelector('.wilo_btn');
 const wiloNext=document.querySelector('.wilo_change');
 const wiloImg=document.querySelector('.wilo_change>img');
 const wiloText=document.querySelector('.wilo_txt');
 const wiloAuthor=document.querySelector('.wilo_author');
-let wilo_index=Math.floor(Math.random()*ListM[1].length);
 
 const nextWilo=()=>{
-    wilo_index=Math.floor(Math.random()*ListM[1].length);
-    // wilo_index++;
-    // if(wilo_index>=loadWilo.length){ wilo_index=0;}
-    wiloList(wilo_index);
+    content_index++;
+	content_index=content_index%indexList.length;
+	
+    wiloImg.src=`img/${ListM[1][randomIndex[content_index]].img}.jpeg`;
+    wiloText.innerText=ListM[1][randomIndex[content_index]].text;
+    wiloAuthor.innerText=ListM[1][randomIndex[content_index]].author;
+    tt=ListM[1][randomIndex[content_index]];
 }
-
-const wiloList=(num)=>{
-    wiloImg.src=`img/${ListM[1][num].img}.jpeg`;
-    wiloText.innerText=ListM[1][num].text;
-    wiloAuthor.innerText=ListM[1][num].author;
-    tt=ListM[1][num];
-}
-
 wiloNext.addEventListener('click',()=>{
     nextWilo();
 });
@@ -308,9 +312,7 @@ wiloBtn.addEventListener('click',()=>{
     if(toggle.style.display=='block'){
         Save.style.display='block';
     }
-    console.log(tt);
 });
-
 // -----------------------------love box ----------------------------
 const loveBox=document.querySelector('.love');
 const loveBtn=document.querySelector('.love_btn');
@@ -318,22 +320,15 @@ const loveNext=document.querySelector('.love_change');
 const loveImg=document.querySelector('.love_change>img');
 const loveText=document.querySelector('.love_txt');
 const loveAuthor=document.querySelector('.love_author');
-let love_index=Math.floor(Math.random()*ListM[2].length);
 
 const nextLove=()=>{
-    love_index=Math.floor(Math.random()*ListM[2].length);
-    // love_index++;
-    // if(love_index>=loadLove.length){ love_index=0;}
-    loveList(love_index);
+    content_index++;
+	content_index=content_index%indexList.length;
+    loveImg.src=`img/${ListM[2][randomIndex[content_index]].img}.jpeg`;
+    loveText.innerText=ListM[2][randomIndex[content_index]].text;
+    loveAuthor.innerText=ListM[2][randomIndex[content_index]].author;
+    tt=ListM[2][randomIndex[content_index]];
 }
-
-const loveList=(num)=>{
-    loveImg.src=`img/${ListM[2][num].img}.jpeg`;
-    loveText.innerText=ListM[2][num].text;
-    loveAuthor.innerText=ListM[2][num].author;
-    tt=ListM[2][num];
-}
-
 loveNext.addEventListener('click',()=>{
     nextLove();
 });
@@ -347,5 +342,4 @@ loveBtn.addEventListener('click',()=>{
     if(toggle.style.display=='block'){
         Save.style.display='block';
     }
-    console.log(tt);
 });
