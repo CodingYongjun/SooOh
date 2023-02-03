@@ -1,0 +1,17 @@
+body,h1,h2,div,p,ul,ol,li,button{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    -ms-overflow-style: none;
+    }
+    
+::-webkit-scrollbar {
+    display: none;
+}
+ul,ol{ list-style: none; }
+a{ text-decoration: none;}
+button {
+    border: 0;
+    display: block;
+}
