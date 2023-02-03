@@ -341,7 +341,6 @@ video{
     font-size: 1rem;
     font-weight: bold;
 }
-
 .content>.login_box{
     width: 100%;
     height: 220px;
@@ -414,7 +413,6 @@ video{
     font-size: 1.563rem;
     font-weight: bold;
 }
-
 .content2{
     width: 100%;
     height: 100vh;
@@ -461,7 +459,7 @@ video{
     font-size: 0.813rem;
 }
 .content2 .content2_box>.txt_box>p:first-child{
-    font-size: 1.25rem;
+    font-size: 1rem;
     margin-bottom: 20px;
 }
 .save{
