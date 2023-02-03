@@ -56,7 +56,7 @@ login.addEventListener('click',(e)=>{
 	let idValue=idV.value;
 	let pwValue=pwV.value;
 	for(let i in memberData){
-		if(memberData[i].id==idValue){
+		if(memberData[i].id==idValue && idValue!=""){
 			if(memberData[i].pw==pwValue){
 				loginState=true;
 				userIndex=i;
